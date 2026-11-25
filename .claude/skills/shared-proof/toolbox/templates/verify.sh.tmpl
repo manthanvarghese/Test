@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Machine checks for this skill. Exit non-zero on any failure.
+set -u
+HERE=$(cd "$(dirname "$0")/.." && pwd)
+C="$(git -C "$HERE" rev-parse --show-toplevel)/.claude/skills/shared-proof/toolbox/checks"
+rc=0
+"$C/skill-structure.sh" "$HERE" || rc=1
+"$C/no-placeholders.sh" "$HERE/SKILL.md" || rc=1
+"$C/links-resolve.sh" "$HERE/SKILL.md" || rc=1
+# --- skill-specific checks below ---
+exit $rc

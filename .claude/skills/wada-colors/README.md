@@ -1,4 +1,4 @@
-# Wada colors
+# Wada colors (Claude skill: see SKILL.md)
 
 Reusable color knowledge from Sanzo Wada's *A Dictionary of Color Combinations*
 (Haishoku Soukan, 1933-34): 157 named colors, 348 combinations of 2-4 colors.

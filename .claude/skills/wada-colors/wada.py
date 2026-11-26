@@ -4,6 +4,7 @@
   python3 wada.py combo 18            # one combination by number (1-348)
   python3 wada.py random [N] [--size K]  # N random combos, optionally K colors each
   python3 wada.py with "Fawn"         # all combos containing a color
+Add --json anywhere to get machine-readable output.
 """
 import json, random, sys, collections, pathlib
 
@@ -13,10 +14,16 @@ for c in COLORS:
     for n in c["combinations"]:
         COMBOS[n].append(c)
 
+JSON = "--json" in sys.argv
+OUT = []
+
 def show(n):
+    if JSON:
+        return OUT.append({"combo": n, "colors": [{"name": c["name"], "hex": c["hex"]} for c in COMBOS[n]]})
     print(f"#{n}: " + "  ".join(f"{c['name']} {c['hex']}" for c in COMBOS[n]))
 
 def main(a):
+    a = [x for x in a if x != "--json"]
     if not a: return print(__doc__)
     cmd = a[0]
     if cmd == "combo": show(int(a[1]))
@@ -31,3 +38,4 @@ def main(a):
             if any(c["name"].lower() == q for c in COMBOS[n]): show(n)
 
 main(sys.argv[1:])
+if JSON: print(json.dumps(OUT, indent=1))
